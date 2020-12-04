@@ -1,5 +1,8 @@
-export default {
-  multiply(a: number, b: number) {
-    return Promise.resolve(a * b);
-  },
+import React from 'react';
+import AlertContainer from './AlertContainer';
+
+const Alert = () => {
+  return <AlertContainer />;
 };
+
+export default Alert;
