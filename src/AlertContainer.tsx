@@ -25,14 +25,17 @@ const { width, height } = Dimensions.get('screen');
 type Position = 'center' | 'above' | 'top' | 'bottom' | 'underneath';
 type Type = 'success' | 'warning' | 'error' | 'loading';
 
+type BasicProps = {
+  visible?: boolean;
+};
+
 export interface AlertContainerProps {
   position?: Position;
-  visible?: boolean;
-  message?: string;
   textStyle?: TextStyle;
   iconStyle?: ActivityIndicatorProps;
   icon?: ReactNode;
   duration?: number;
+  message?: string;
   type?: Type;
   animation?: 'translateX' | 'translateY' | 'opacity';
   distance?: number;
@@ -55,7 +58,7 @@ const type = {
   error: 'close',
 };
 
-const AlertContainer: React.FC<AlertContainerProps> = (props) => {
+const AlertContainer: React.FC<AlertContainerProps & BasicProps> = (props) => {
   const { onShow, onShown, duration = 500, visible, onHide } = props;
 
   const fadeAnim = useRef<Animated.Value>(new Animated.Value(0)).current;

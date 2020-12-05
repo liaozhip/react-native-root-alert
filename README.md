@@ -1,4 +1,4 @@
-# react-native-alert
+# react-native-root-alert
 
 An alert component based on react-native-root-siblings
 
@@ -6,17 +6,68 @@ An alert component based on react-native-root-siblings
 
 ```sh
 npm install react-native-root-alert
+npm install react-native-root-siblings
 ```
 
 ## Usage
+
+```js
+// 首先要将需要显示的页面包裹起来
+import { RootSiblingParent } from 'react-native-root-siblings';
+
+<RootSiblingParent>
+  <App />
+</RootSiblingParent>
+```
 
 ```js
 import Alert from "react-native-root-alert";
 
 // ...
 
-const result = await Alert.show('请求中...');
+// show
+const alert = Alert.show('请求中...', options);
+
+// hide
+Alert.hide(alert);
 ```
+
+### options
+`timeout`
+- 弹窗显示时长：`infinite 默认`
+
+`duration`
+- 动画持续时长：`500 默认`
+
+`position`
+- 显示位置：`center`, `above 默认`, `top`, `bottom`, `underneath`
+
+`textStyle`
+- 文字样式：`style`
+
+`iconStyle`
+- 图标样式：`style`
+
+`icon`
+- 显示图标：`Component`
+
+`type`
+- 类型：`success`, `warning`, `error`, `loading 默认`
+
+`animation`
+- 动画类型：`translateX`, `translateY 默认`, `opacity`
+
+`distance`
+- 动画移动距离: `5 默认`
+
+`containerStyle`
+- 容器样式: `style`
+
+`onShow`
+- 监听显示: `Function`
+
+`onHide`
+- 监听隐藏: `Function`
 
 ## Contributing
 
@@ -25,12 +76,3 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 ## License
 
 MIT
-
-## type （只允许下列7个标识）
-- feat：新功能（feature）
-- fix：修补bug
-- docs：文档（documentation）
-- style： 格式（不影响代码运行的变动）
-- refactor：重构（即不是新增功能，也不是修改bug的代码变动）
-- test：增加测试
-- chore：构建过程或辅助工具的变动
