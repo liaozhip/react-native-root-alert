@@ -1,6 +1,6 @@
 {
   "name": "react-native-root-alert",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "An alert component based on react-native-root-siblings",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
