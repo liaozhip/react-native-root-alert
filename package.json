@@ -1,6 +1,6 @@
 {
   "name": "react-native-alert",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "An alert component based on react-native-root-siblings",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -49,6 +49,7 @@
     "@types/jest": "^26.0.0",
     "@types/react": "^16.9.19",
     "@types/react-native": "0.62.13",
+    "@types/react-native-vector-icons": "^6.4.6",
     "commitlint": "^8.3.5",
     "eslint": "^7.2.0",
     "eslint-config-prettier": "^6.11.0",
@@ -140,7 +141,6 @@
     ]
   },
   "dependencies": {
-    "@types/react-native-vector-icons": "^6.4.6",
     "react-native-root-siblings": "^4.0.6",
     "react-native-vector-icons": "^7.1.0"
   }
