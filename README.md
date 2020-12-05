@@ -5,17 +5,17 @@ An alert component based on react-native-root-siblings
 ## Installation
 
 ```sh
-npm install react-native-alert
+npm install react-native-root-alert
 ```
 
 ## Usage
 
 ```js
-import Alert from "react-native-alert";
+import Alert from "react-native-root-alert";
 
 // ...
 
-const result = await Alert.multiply(3, 7);
+const result = await Alert.show('请求中...');
 ```
 
 ## Contributing
