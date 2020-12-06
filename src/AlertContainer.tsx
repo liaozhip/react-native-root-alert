@@ -98,7 +98,6 @@ const AlertContainer: React.FC<AlertContainerProps & BasicProps> = (props) => {
   }, [fadeInt, visible, parallel, props.animation]);
 
   useEffect(() => {
-    parallel();
     return () => {
       onHide && onHide();
     };

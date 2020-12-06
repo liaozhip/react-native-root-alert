@@ -1,4 +1,5 @@
 import React from 'react';
+import { AppState } from 'react-native';
 import type RootSiblingsManager from 'react-native-root-siblings';
 import RootSiblings from 'react-native-root-siblings';
 import AlertContainer, { AlertContainerProps } from './AlertContainer';
@@ -7,20 +8,20 @@ type AlertProps = {
   timeout?: 'infinite' | number;
 } & AlertContainerProps;
 
-class Alert {
-  static _timer: NodeJS.Timeout | null = null;
-  static _alert: RootSiblingsManager | null;
+const alerts: Array<RootSiblingsManager> = [];
+const timers: Array<NodeJS.Timeout> = [];
 
+class Alert {
   static show(
     message?: string | AlertProps,
     options: AlertProps = {}
   ): RootSiblingsManager {
-    this._alert && this.hide(this._alert);
     if (typeof message === 'object') {
       options = message;
     } else {
       options.message = message;
     }
+
     options = {
       ...{
         visible: true,
@@ -30,23 +31,52 @@ class Alert {
           color: '#ffffff',
         },
         animation: 'translateY',
-        timeout: 'infinite',
+        timeout: 3000,
       },
       ...options,
     };
-    this._alert = new RootSiblings(<AlertContainer {...options} />);
-    if (typeof options.timeout === 'number') {
-      this._timer = setTimeout(() => {
-        this.hide(this._alert!);
-      }, options.timeout);
+
+    if (typeof options.onHide === 'function') {
+      const oldOnHide = options.onHide;
+      options.onHide = () => {
+        oldOnHide();
+        this._clear();
+      };
+    } else {
+      options.onHide = this._clear;
     }
-    return this._alert;
+
+    const rootSiblings: RootSiblingsManager = new RootSiblings(
+      <AlertContainer {...options} />
+    );
+
+    alerts.push(rootSiblings);
+
+    if (typeof options.timeout === 'number') {
+      const timer = setTimeout(() => {
+        timers.splice(timers.indexOf(timer), 1);
+        AppState.currentState === 'background' || this.hide(rootSiblings);
+      }, options.timeout);
+      timers.push(timer);
+    }
+
+    return rootSiblings;
   }
 
-  static hide(_alert: RootSiblingsManager) {
-    if (_alert instanceof RootSiblings) {
-      _alert.destroy();
-      this._timer && clearTimeout(this._timer);
+  static _clear() {
+    if (AppState.currentState === 'background') {
+      timers.forEach((timer) => {
+        clearTimeout(timer);
+      });
+    }
+  }
+
+  static hide(rootSiblings: RootSiblingsManager) {
+    const index = alerts.indexOf(rootSiblings);
+    const alert = alerts[index];
+    if (alert instanceof RootSiblings) {
+      alert.destroy();
+      alerts.splice(index, 1);
     }
   }
 }
